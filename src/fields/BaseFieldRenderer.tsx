@@ -1,30 +1,30 @@
 import * as React from "react";
-import { IFieldProps, FormMode } from "../interfaces";
+import { IFieldProps, FormMode, IFormManagerProps } from "../interfaces";
+import { FormFieldsStore } from '../store';
 
 export class BaseFieldRenderer extends React.Component<IFieldProps, any> {
   public constructor(props) {
     super(props);
     this.state = {
-      valueForSaving: null,
-      currentMode: this.props.CurrentMode
+      valueForSaving: null
     };
-
-    if (this.props.getFieldRendererObject) {
-      this.props.getFieldRendererObject(this);
-    }
   }
 
   public render() {
-    if (this.state.currentMode == FormMode.New) {
-      return this.renderNewForm();
-    }
-    if (this.state.currentMode == FormMode.Edit) {
-      return this.renderEditForm();
-    }
-    if (this.state.currentMode == FormMode.Display) {
-      return this.renderDispForm();
-    }
-    return null;
+    return <FormFieldsStore.Consumer mapStateToProps={(state: IFormManagerProps) => ({CurrentMode: state.CurrentMode})}>
+      {({CurrentMode, actions}) => {
+        if (CurrentMode == FormMode.New) {
+          return this.renderNewForm();
+        }
+        if (CurrentMode == FormMode.Edit) {
+          return this.renderEditForm();
+        }
+        if (CurrentMode == FormMode.Display) {
+          return this.renderDispForm();
+        }
+        return null;
+      }}
+    </FormFieldsStore.Consumer>
   }
 
   protected renderNewForm() {

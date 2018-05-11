@@ -25,6 +25,7 @@ export class FormField extends React.Component<IFormFieldProps, any> {
             return null;
           }
 
+          console.log(fieldInfo[0]);
           return (this.createFieldRenderer(fieldInfo[0], this.setFieldData));
         }}
       </FormFieldsStore.Consumer>
