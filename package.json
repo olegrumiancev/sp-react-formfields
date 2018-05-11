@@ -1,6 +1,6 @@
 {
   "name": "@olegrumiancev/sp-react-formfields",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Collection of React controls used for rendering SharePoint fields in custom forms. Support new/edit/display rendering modes. Have onChanged callbacks and getValue methods.",
   "scripts": {
     "build": "tsc"
