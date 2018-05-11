@@ -1,10 +1,9 @@
 {
-  "name": "@rumiancev/sp-react-formfields",
-  "version": "0.5.1-alpha.1",
+  "name": "@olegrumiancev/sp-react-formfields",
+  "version": "0.5.2-alpha1",
   "description": "Collection of React controls used for rendering SharePoint fields in custom forms. Support new/edit/display rendering modes. Have onChanged callbacks and getValue methods.",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "keywords": [
     "SharePoint",
@@ -38,5 +37,14 @@
   },
   "dependencies": {
     "react-waterfall": "^3.0.7"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olegrumiancev/sp-react-formfields"
+  },
+  "bugs": {
+    "url": "https://github.com/olegrumiancev/sp-react-formfields/issues"
+  },
+  "homepage": "https://github.com/olegrumiancev/sp-react-formfields",
+  "main": "lib/index.js"
 }
