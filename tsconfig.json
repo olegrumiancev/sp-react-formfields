@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "rootDir": "src",
+    "jsx": "react",
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "types": [
+      //"node",
+      //"sharepoint"
+      "react"
+    ],
+    "outDir": "./lib"
+  },
+  "exclude": [
+    "node_modules",
+    "lib"
+  ]
+}
