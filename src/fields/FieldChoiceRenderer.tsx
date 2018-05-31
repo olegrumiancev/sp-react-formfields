@@ -1,8 +1,8 @@
-import * as React from "react";
-import { IFieldProps, FormMode } from "../interfaces";
+import * as React from 'react';
+import { IFieldProps, FormMode } from '../interfaces';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { BaseFieldRenderer } from "./BaseFieldRenderer";
+import { BaseFieldRenderer } from './BaseFieldRenderer';
 
 export class FieldChoiceRenderer extends BaseFieldRenderer {
   public constructor(props: IFieldProps) {
@@ -17,7 +17,7 @@ export class FieldChoiceRenderer extends BaseFieldRenderer {
     }
     this.state = {
       ...this.state,
-      selectedItems: vals
+      currentValue: vals
     };
   }
 
@@ -41,39 +41,38 @@ export class FieldChoiceRenderer extends BaseFieldRenderer {
   private renderNewOrEditForm() {
     return (
       <Dropdown
-        ref={(d) => {}}
         key={`dropdown_${this.props.InternalName}`}
         multiSelect={this.props.IsMulti}
         onChanged={(newValue) => this.saveFieldDataInternal(newValue)}
-        options={this.props.Choices.map(c => ({key: c, text: c, selected: (this.state.selectedItems as string[]).includes(c)}))}
-        placeHolder={this.props.IsMulti ? "Select options" : "Select an option"}
+        options={this.props.Choices.map(c => ({key: c, text: c, selected: (this.state.currentValue as string[]).includes(c)}))}
+        placeHolder={this.props.IsMulti ? 'Select options' : 'Select an option'}
       />
     );
   }
 
-  private saveFieldDataInternal(newValue) {
+  private saveFieldDataInternal(newValue: any) {
     if (this.props.IsMulti) {
       this.setState({currentValue: this.constructNewState(newValue.key, newValue.selected)}, () => {
-        this.trySetChangedValue({results: this.state.selectedItems});
+        this.trySetChangedValue({results: this.state.currentValue});
       });
     } else {
-      this.setState({selectedItems: [newValue.key]}, () => {
-        this.trySetChangedValue(this.state.selectedItems.length > 0 ? this.state.selectedItems[0] : undefined);
+      this.setState({currentValue: [newValue.key]}, () => {
+        this.trySetChangedValue(this.state.currentValue.length > 0 ? this.state.currentValue[0] : undefined);
       });
     }
   }
 
   private constructNewState(value: string, toAdd: boolean): string[] {
-    let result: string[] = this.state.selectedItems;
+    let result: string[] = this.state.currentValue;
     if (toAdd) {
-      let filtered = this.state.selectedItems.filter(i => i == value);
-      if (!(this.state.selectedItems as string[]).includes(value)) {
-        result = [value, ...this.state.selectedItems];
+      let filtered = this.state.currentValue.filter(i => i === value);
+      if (!(this.state.currentValue as string[]).includes(value)) {
+        result = [value, ...this.state.currentValue];
       }
     } else {
       result = [];
-      for (let i of this.state.selectedItems) {
-        if (i != value) {
+      for (let i of this.state.currentValue) {
+        if (i !== value) {
           result.push(i);
         }
       }

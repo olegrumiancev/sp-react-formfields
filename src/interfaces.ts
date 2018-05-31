@@ -1,6 +1,6 @@
-import { SPRest } from "@pnp/sp";
-import { IPersonaProps } from "office-ui-fabric-react/lib/Persona";
-import { BaseFieldRenderer } from "./fields";
+import { SPRest } from '@pnp/sp';
+import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
+import { BaseFieldRenderer } from './fields';
 
 export interface IFormMode {
   New: number,
@@ -20,7 +20,6 @@ export interface IFormManagerProps {
   CurrentItemId?: number;
   Fields?: IFieldProps[];
   IsLoading: boolean;
-  onInitCompleteCallback?: (manager) => void;
 }
 
 export interface IFormFieldProps {

@@ -1,9 +1,10 @@
-import * as React from "react";
-import { IFieldProps, FormMode, IFormManagerProps } from "../interfaces";
+import * as React from 'react';
+import { IFieldProps, FormMode, IFormManagerProps } from '../interfaces';
 import { FormFieldsStore } from '../store';
+import { Button } from 'office-ui-fabric-react/lib/Button';
 
 export class BaseFieldRenderer extends React.Component<IFieldProps, any> {
-  public constructor(props) {
+  public constructor(props: IFieldProps) {
     super(props);
     this.state = {
       valueForSaving: null
@@ -11,24 +12,27 @@ export class BaseFieldRenderer extends React.Component<IFieldProps, any> {
   }
 
   public render() {
-    return <FormFieldsStore.Consumer mapStateToProps={(state: IFormManagerProps) => ({CurrentMode: state.CurrentMode})}>
+    return (<FormFieldsStore.Consumer mapStateToProps={(state: IFormManagerProps) => ({CurrentMode: state.CurrentMode})}>
       {({CurrentMode, actions}) => {
-        if (CurrentMode == FormMode.New) {
+        console.log('in render base');
+        console.log(CurrentMode);
+        if (CurrentMode === FormMode.New) {
           return this.renderNewForm();
         }
-        if (CurrentMode == FormMode.Edit) {
+        if (CurrentMode === FormMode.Edit) {
           return this.renderEditForm();
         }
-        if (CurrentMode == FormMode.Display) {
+        if (CurrentMode === FormMode.Display) {
           return this.renderDispForm();
         }
         return null;
       }}
     </FormFieldsStore.Consumer>
+    )
   }
 
   protected renderNewForm() {
-    return (<div>Not implemented, field type: {this.props.Type}, form mode: new</div>);
+    return (<div>Not implemented, field type: {this.props.Type}, form mode: new</div>)
   }
 
   protected renderEditForm() {
@@ -44,6 +48,7 @@ export class BaseFieldRenderer extends React.Component<IFieldProps, any> {
       this.props.saveChangedFieldData(this.props.InternalName, newValue);
     }
     this.setState({valueForSaving: newValue});
+    FormFieldsStore.actions.setFieldData(this.props.InternalName, newValue);
   }
 
   public setFieldMode(mode: number) {

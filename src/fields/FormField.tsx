@@ -9,19 +9,22 @@ export class FormField extends React.Component<IFormFieldProps, any> {
   }
 
   public render() {
+    console.log(`render in formfield`);
     return (
-      <FormFieldsStore.Consumer mapStateToProps={(state: IFormManagerProps) => ({
-        Fields: state.Fields,
-        IsLoading: state.IsLoading,
-        CurrentMode: state.CurrentMode
-      })}>
+      <FormFieldsStore.Consumer
+        mapStateToProps={(state: IFormManagerProps) => ({
+          Fields: state.Fields,
+          IsLoading: state.IsLoading,
+          CurrentMode: state.CurrentMode
+        })}
+      >
         {({Fields, IsLoading, CurrentMode, actions}) => {
           if (!Fields) {
             return null;
           }
 
-          let fieldInfo = (Fields as IFieldProps[]).filter(f => f.InternalName == this.props.InternalName);
-          if (!fieldInfo || fieldInfo.length < 0) {
+          let fieldInfo = (Fields as IFieldProps[]).filter(f => f.InternalName === this.props.InternalName);
+          if (!fieldInfo || fieldInfo.length < 1) {
             return null;
           }
 
@@ -33,7 +36,7 @@ export class FormField extends React.Component<IFormFieldProps, any> {
   }
 
   public componentDidMount() {
-    let fieldInfo = FormFieldsStore.getState().Fields.filter(f => f.InternalName == this.props.InternalName);
+    let fieldInfo = FormFieldsStore.getState().Fields.filter(f => f.InternalName === this.props.InternalName);
     if (fieldInfo && fieldInfo.length > 0) {
       this.setState({fieldInfo: fieldInfo[0]});
     }
@@ -46,25 +49,33 @@ export class FormField extends React.Component<IFormFieldProps, any> {
   private createFieldRenderer(fieldProps: IFieldProps, onFieldDataChangeCallback: (internalName: string, newValue: any) => void): JSX.Element {
     let defaultElement = null;
     defaultElement = (<BaseFieldRenderer {...fieldProps} key={fieldProps.InternalName} />);
-    if (fieldProps.Type == "Text") {
-      return <FieldTextRenderer {...fieldProps}
+    if (fieldProps.Type === 'Text') {
+      return <FieldTextRenderer
+        {...fieldProps}
         key={fieldProps.InternalName}
-        saveChangedFieldData={onFieldDataChangeCallback} />
+        saveChangedFieldData={onFieldDataChangeCallback}
+      />
     }
     if (fieldProps.Type.match(/user/gi)) {
-      return <FieldUserRenderer {...fieldProps}
+      return <FieldUserRenderer
+        {...fieldProps}
         key={fieldProps.InternalName}
-        saveChangedFieldData={onFieldDataChangeCallback} />
+        saveChangedFieldData={onFieldDataChangeCallback}
+      />
     }
     if (fieldProps.Type.match(/choice/gi)) {
-      return <FieldChoiceRenderer {...fieldProps}
+      return <FieldChoiceRenderer
+        {...fieldProps}
         key={fieldProps.InternalName}
-        saveChangedFieldData={onFieldDataChangeCallback} />
+        saveChangedFieldData={onFieldDataChangeCallback}
+      />
     }
     if (fieldProps.Type.match(/lookup/gi)) {
-      return <FieldLookupRenderer {...fieldProps}
+      return <FieldLookupRenderer
+        {...fieldProps}
         key={fieldProps.InternalName}
-        saveChangedFieldData={onFieldDataChangeCallback} />
+        saveChangedFieldData={onFieldDataChangeCallback}
+      />
     }
 
     return defaultElement;

@@ -1,16 +1,16 @@
 
 export const getQueryString = (url, field) => {
-  var href = url ? url : window.location.href;
-  var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
-  var string = reg.exec(href);
-  return string ? string[1] : null;
+  let href = url ? url : window.location.href;
+  let reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
+  let s = reg.exec(href);
+  return s ? s[1] : null;
 }
 
-const escapeChars = { lt: '<', gt: '>', quot: '"', apos: "'", amp: '&' };
+const escapeChars = { lt: '<', gt: '>', quot: '"', apos: '\'', amp: '&' };
 export const unescapeHTML = (str) => {
   return str.replace(/\&([^;]+);/g, (entity, entityCode) => {
-    var match;
-    
+    let match;
+
     if ( entityCode in escapeChars) {
       return escapeChars[entityCode];
     } else if ( match = entityCode.match(/^#x([\da-fA-F]+)$/)) {

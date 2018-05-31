@@ -1,6 +1,6 @@
 {
   "name": "@olegrumiancev/sp-react-formfields",
-  "version": "0.5.4",
+  "version": "0.5.8-2",
   "description": "Collection of React controls used for rendering SharePoint fields in custom forms. Support new/edit/display rendering modes. Have onChanged callbacks and getValue methods.",
   "scripts": {
     "build": "tsc"
@@ -10,30 +10,35 @@
     "React",
     "PnP",
     "Form",
-    "Controls"
+    "Controls",
+    "Office UI",
+    "Fabric"
   ],
   "author": "Oleg Rumiancev",
   "license": "MIT",
   "peerDependencies": {
-    "@pnp/common": "^1.0.5-1",
-    "@pnp/logging": "^1.0.5-1",
-    "@pnp/odata": "^1.0.5-1",
-    "@pnp/sp": "^1.0.5-1",
+    "@pnp/common": "^1.0.5",
+    "@pnp/logging": "^1.0.5",
+    "@pnp/odata": "^1.0.5",
+    "@pnp/sp": "^1.0.5",
     "office-ui-fabric-react": "^5.95.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
   },
   "devDependencies": {
-    "@pnp/common": "^1.0.5-1",
-    "@pnp/logging": "^1.0.5-1",
-    "@pnp/odata": "^1.0.5-1",
-    "@pnp/sp": "^1.0.5-1",
+    "@pnp/common": "^1.0.5",
+    "@pnp/logging": "^1.0.5",
+    "@pnp/odata": "^1.0.5",
+    "@pnp/sp": "^1.0.5",
     "@types/react": "^16.3.14",
     "eslint-config-standard": "^11.0.0",
     "office-ui-fabric-react": "^5.98.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "tslint-config-standard": "^7.0.0"
+    "tslint-config-standard": "^7.0.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^2.8.3",
+    "tslint": "^5.10.0"
   },
   "dependencies": {
     "react-waterfall": "^3.0.7"

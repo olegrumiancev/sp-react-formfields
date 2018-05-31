@@ -1,8 +1,8 @@
-import * as React from "react";
-import { IFieldProps, FormMode } from "../interfaces";
+import * as React from 'react';
+import { IFieldProps, FormMode } from '../interfaces';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { BaseFieldRenderer } from "./BaseFieldRenderer";
+import { BaseFieldRenderer } from './BaseFieldRenderer';
 
 export class FieldTextRenderer extends BaseFieldRenderer {
   public constructor(props: IFieldProps) {
@@ -26,10 +26,12 @@ export class FieldTextRenderer extends BaseFieldRenderer {
   }
 
   private renderNewOrEditForm() {
-    return (<TextField onChanged={(newValue) => {
+    return (<TextField
+      onChanged={(newValue) => {
         this.setState({currentValue: newValue});
         this.trySetChangedValue(newValue);
       }}
-      value={this.state.currentValue == null ? "" : this.state.currentValue} />);
+      value={this.state.currentValue == null ? '' : this.state.currentValue}
+    />);
   }
 }

@@ -16,8 +16,6 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "types": [
-      //"node",
-      //"sharepoint"
       "react"
     ],
     "outDir": "./lib"

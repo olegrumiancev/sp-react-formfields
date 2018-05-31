@@ -1,15 +1,15 @@
-import * as React from "react";
-import { IFieldProps, FormMode } from "../interfaces";
+import * as React from 'react';
+import { IFieldProps, FormMode } from '../interfaces';
 import { TagPicker, ITag, IBasePicker } from 'office-ui-fabric-react/lib/Pickers';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { BaseFieldRenderer } from "./BaseFieldRenderer";
-import { Web } from "@pnp/sp";
-import { handleError } from "../utils";
+import { BaseFieldRenderer } from './BaseFieldRenderer';
+import { Web } from '@pnp/sp';
+import { handleError } from '../utils';
 
 export class FieldLookupRenderer extends BaseFieldRenderer {
   private allItemsLoading: boolean;
   private tagPicker: any;
-  public constructor(props) {
+  public constructor(props: IFieldProps) {
     super(props);
     let vals = [];
     if (this.props.FormFieldValue != null) {
@@ -42,7 +42,8 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
 
   private renderNewOrEditForm() {
     return (
-      <TagPicker className="lookupTagPickerInput"
+      <TagPicker
+        className="lookupTagPickerInput"
         itemLimit={this.props.IsMulti ? 100 : 1}
         pickerSuggestionsProps={{
           suggestionsHeaderText: 'Suggested items',
@@ -53,7 +54,7 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
         defaultSelectedItems={this.state.selectedItems}
         onChange={(items?: ITag[]) => this.processTagItemsChange(items == null ? [] : items)}
         resolveDelay={750}
-        //componentRef={(c) => this.tagPicker = c}
+        // componentRef={(c) => this.tagPicker = c}
         ref={c => this.tagPicker = c}
       />
     );
@@ -70,10 +71,9 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
       if (this.state.allLookupItems == null) {
         this.allItemsLoading = true;
         if (!this.state.allItemsLoading) {
-          let web: Web = null;
           let toSelect = [this.props.LookupField];
-          if (this.props.LookupField != "ID") {
-            toSelect.push("ID");
+          if (this.props.LookupField !== 'ID') {
+            toSelect.push('ID');
           }
 
           this.getPnpWeb(this.props.LookupWebId).then((web: Web) => {
@@ -84,16 +84,10 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
                 name: i[this.props.LookupField].toString()
               }));
               this.setState({allLookupItems: transformedItems}, () => {
-                //this.tagPicker.setState({isFocused: false});
                 this.tagPicker.dismissSuggestions();
                 let suggestions = this.getPossibleSuggestionsInternal(filterText, selectedItems);
                 this.tagPicker.suggestionStore.updateSuggestions(suggestions);
                 this.tagPicker.setState({suggestionsVisible: true});
-                //this.tagPicker.resetFocus(0);
-                //this.resolveTagSuggestions(filterText, selectedItems);
-
-
-                //this.tagPicker.setState({isFocused: true});
               });
             }).catch(e => {
               handleError(e);
@@ -137,7 +131,7 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
     return tagList.filter(compareTag => compareTag.key === tag.key).length > 0;
   }
 
-  private saveFieldDataInternal(newValue) {
+  private saveFieldDataInternal(newValue: any) {
     if (this.props.IsMulti) {
       this.setState({selectedItems: this.constructNewState(newValue.key, newValue.selected)}, () => {
         this.trySetChangedValue({results: this.state.selectedItems});
@@ -152,14 +146,14 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
   private constructNewState(value: string, toAdd: boolean): string[] {
     let result: string[] = this.state.selectedItems;
     if (toAdd) {
-      let filtered = this.state.selectedItems.filter(i => i == value);
+      let filtered = this.state.selectedItems.filter(i => i === value);
       if (!(this.state.selectedItems as string[]).includes(value)) {
         result = [value, ...this.state.selectedItems];
       }
     } else {
       result = [];
       for (let i of this.state.selectedItems) {
-        if (i != value) {
+        if (i !== value) {
           result.push(i);
         }
       }

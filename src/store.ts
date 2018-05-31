@@ -17,7 +17,10 @@ const store = {
       configurePnp(sPWebUrl);
 
       let list = sp.web.lists.getById(currentListId);
-      let listFields: any[] = await list.fields.filter("ReadOnlyField eq false and Hidden eq false and Title ne 'Content Type'").get(); //.then((listFields: any[]) => {
+      let listFields: any[] =
+        await list
+          .fields
+          .filter('ReadOnlyField eq false and Hidden eq false and Title ne \'Content Type\'').get();
 
       let toSelect = [];
       let toExpand = [];
@@ -36,8 +39,8 @@ const store = {
       }
 
       let fieldInfos = [];
-      if (currentMode != FormMode.New) {
-        let item = await list.items.getById(currentItemId).select(...toSelect).expand(...toExpand).get(); //.then(item => {
+      if (currentMode !== FormMode.New) {
+        let item = await list.items.getById(currentItemId).select(...toSelect).expand(...toExpand).get(); // .then(item => {
         fieldInfos = listFields.map(fm => {
           return FieldPropsManager.createFieldRendererPropsFromFieldMetadata(fm, currentMode, item, sp);
         });
@@ -66,7 +69,7 @@ const store = {
     },
     setFieldData: (state: IFormManagerProps, internalName: string, newValue: any) => {
 
-      let filtered = state.Fields.filter(f => f.InternalName == internalName);
+      let filtered = state.Fields.filter(f => f.InternalName === internalName);
       if (filtered && filtered.length > 0) {
         filtered[0].FormFieldValue = newValue;
       }
@@ -76,7 +79,8 @@ const store = {
   }
 }
 
-const getFieldControlValuesForPost = (state: IFormManagerProps): Object => {
+const getFieldControlValuesForPost = (): Object => {
+  const state = initedStore.getState();
   let toReturn = {};
   for (let fp of state.Fields) {
     if (fp.Type.match(/user/gi) || fp.Type.match(/lookup/gi)) {
