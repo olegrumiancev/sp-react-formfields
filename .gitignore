@@ -16,7 +16,7 @@ yarn-error.log*
 # SharePoint Build Specific
 
 /config/private.*
-/dist
+# /dist
 /tmp
 /cache
-/lib
+# /lib
