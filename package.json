@@ -30,18 +30,29 @@
     "@pnp/logging": "^1.0.5",
     "@pnp/odata": "^1.0.5",
     "@pnp/sp": "^1.0.5",
+    "@types/node": "^10.3.2",
     "@types/react": "^16.3.14",
+    "@types/sharepoint": "^2016.1.1",
     "eslint-config-standard": "^11.0.0",
     "office-ui-fabric-react": "^5.98.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "tslint": "^5.10.0",
     "tslint-config-standard": "^7.0.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^2.8.3",
-    "tslint": "^5.10.0"
+    "typescript": "^2.8.3"
   },
   "dependencies": {
-    "react-waterfall": "^3.0.7"
+    "react-waterfall": "^3.0.7",
+    "react-draft-wysiwyg": "^1.12.13",
+    "react-dropzone": "^4.2.11",
+    "react-dropzone-component": "^3.2.0",
+    "draft-js": "^0.10.5",
+    "draftjs-to-html": "^0.8.4",
+    "html-to-draftjs": "^1.4.0",
+    "immutable": "^3.8.2",
+    "moment": "^2.22.2",
+    "rc-time-picker": "^3.3.1"
   },
   "repository": {
     "type": "git",

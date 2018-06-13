@@ -28,7 +28,7 @@ export class FieldTextRenderer extends BaseFieldRenderer {
   private renderNewOrEditForm() {
     return (<TextField
       onChanged={(newValue) => {
-        this.setState({currentValue: newValue});
+        this.setState({ currentValue: newValue });
         this.trySetChangedValue(newValue);
       }}
       value={this.state.currentValue == null ? '' : this.state.currentValue}

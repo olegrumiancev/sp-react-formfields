@@ -27,7 +27,7 @@ export const FieldPropsManager = {
     fieldProps = addFieldTypeSpecificProperties(fieldProps, fieldMetadata);
     return fieldProps;
   }
-}
+};
 
 const addFieldTypeSpecificProperties = (fieldProps: IFieldProps, fieldMetadata: any): IFieldProps => {
   let result = fieldProps;
@@ -40,20 +40,39 @@ const addFieldTypeSpecificProperties = (fieldProps: IFieldProps, fieldMetadata: 
     case 'LookupMulti':
       result = addLookupFieldProperties(fieldProps, fieldMetadata);
       break;
+    case 'Number':
+      result = addNumberFieldProperties(fieldProps, fieldMetadata);
+      break;
+    case 'DateTime':
+      result = addDateTimeFieldProperties(fieldProps, fieldMetadata);
+      break;
+    case 'Attachmants':
+      console.log(fieldMetadata);
+      break;
     default:
       break;
   }
   return result;
-}
+};
+
+const addDateTimeFieldProperties = (fieldProps: IFieldProps, fieldMetadata: any): IFieldProps => {
+  fieldProps.DateTimeIsTimePresent = fieldMetadata.DisplayFormat === 1;
+  return fieldProps;
+};
+
+const addNumberFieldProperties = (fieldProps: IFieldProps, fieldMetadata: any): IFieldProps => {
+  fieldProps.NumberIsPercent = fieldMetadata.SchemaXml.match(/percentage="true"/gi) !== null;
+  return fieldProps;
+};
 
 const addChoiceFieldProperties = (fieldProps: IFieldProps, fieldMetadata: any): IFieldProps => {
-  fieldProps.Choices = fieldMetadata.Choices == null ? undefined : fieldMetadata.Choices.results
+  fieldProps.Choices = fieldMetadata.Choices == null ? undefined : fieldMetadata.Choices.results;
   return fieldProps;
-}
+};
 
 const addLookupFieldProperties = (fieldProps: IFieldProps, fieldMetadata: any): IFieldProps => {
   fieldProps.LookupListId = fieldMetadata.LookupList == null ? undefined : fieldMetadata.LookupList,
   fieldProps.LookupWebId = fieldMetadata.LookupWebId == null ? undefined : fieldMetadata.LookupWebId,
-  fieldProps.LookupField = fieldMetadata.LookupField == null || fieldMetadata.LookupField === '' ? 'Title' : fieldMetadata.LookupField
+  fieldProps.LookupField = fieldMetadata.LookupField == null || fieldMetadata.LookupField === '' ? 'Title' : fieldMetadata.LookupField;
   return fieldProps;
-}
+};

@@ -21,7 +21,7 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
     }
     this.state = {
       ...this.state,
-      selectedItems: vals.map(v => ({key: v.ID, name: v[this.props.LookupField]})),
+      selectedItems: vals.map(v => ({ key: v.Id, name: v[this.props.LookupField] })),
       allLookupItems: null
     };
 
@@ -43,7 +43,7 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
   private renderNewOrEditForm() {
     return (
       <TagPicker
-        className="lookupTagPickerInput"
+        className='lookupTagPickerInput'
         itemLimit={this.props.IsMulti ? 100 : 1}
         pickerSuggestionsProps={{
           suggestionsHeaderText: 'Suggested items',
@@ -61,7 +61,24 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
   }
 
   private processTagItemsChange(items: ITag[]) {
-    this.setState({selectedItems: items});
+    this.setState({ selectedItems: items }, () => {
+      if (this.props.IsMulti) {
+        let toSave = [];
+        if (this.state.selectedItems && this.state.selectedItems.length > 0) {
+          toSave = this.state.selectedItems.map((si: ITag) => {
+            return { Id: parseInt(si.key), Title: si.name };
+          });
+        }
+        this.trySetChangedValue({ results: toSave });
+      } else {
+        let toSave = undefined;
+        if (this.state.selectedItems && this.state.selectedItems.length > 0) {
+          let selectedTag = this.state.selectedItems[0] as ITag;
+          toSave = { Id: parseInt(selectedTag.key), Title: selectedTag.name };
+        }
+        this.trySetChangedValue(toSave);
+      }
+    });
   }
 
   private resolveTagSuggestions(filterText: string, selectedItems: ITag[]): ITag[] {
@@ -83,11 +100,11 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
                 key: i.ID.toString(),
                 name: i[this.props.LookupField].toString()
               }));
-              this.setState({allLookupItems: transformedItems}, () => {
+              this.setState({ allLookupItems: transformedItems }, () => {
                 this.tagPicker.dismissSuggestions();
                 let suggestions = this.getPossibleSuggestionsInternal(filterText, selectedItems);
                 this.tagPicker.suggestionStore.updateSuggestions(suggestions);
-                this.tagPicker.setState({suggestionsVisible: true});
+                this.tagPicker.setState({ suggestionsVisible: true });
               });
             }).catch(e => {
               handleError(e);
@@ -97,7 +114,7 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
         }
       } else {
         this.tagPicker.focus();
-        this.tagPicker.setState({isFocused: false});
+        this.tagPicker.setState({ isFocused: false });
         results = this.getPossibleSuggestionsInternal(filterText, selectedItems);
 
       }
@@ -129,18 +146,6 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
       return false;
     }
     return tagList.filter(compareTag => compareTag.key === tag.key).length > 0;
-  }
-
-  private saveFieldDataInternal(newValue: any) {
-    if (this.props.IsMulti) {
-      this.setState({selectedItems: this.constructNewState(newValue.key, newValue.selected)}, () => {
-        this.trySetChangedValue({results: this.state.selectedItems});
-      });
-    } else {
-      this.setState({selectedItems: [newValue.key]}, () => {
-        this.trySetChangedValue(this.state.selectedItems.length > 0 ? this.state.selectedItems[0] : undefined);
-      });
-    }
   }
 
   private constructNewState(value: string, toAdd: boolean): string[] {

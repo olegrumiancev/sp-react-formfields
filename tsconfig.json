@@ -16,12 +16,13 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "types": [
-      "react"
+      "react",
+      "node",
+      "sharepoint"
     ],
     "outDir": "./lib"
   },
   "exclude": [
-    "node_modules",
     "lib"
   ]
 }

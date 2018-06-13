@@ -2,11 +2,12 @@ import * as React from 'react';
 import { IFieldProps, FormMode } from '../interfaces';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { NormalPeoplePicker, IBasePicker, ValidationState } from 'office-ui-fabric-react/lib/Pickers';
+import { NormalPeoplePicker, IBasePicker, ValidationState, BasePeoplePicker } from 'office-ui-fabric-react/lib/Pickers';
 import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 import { WebEnsureUserResult } from '@pnp/sp';
 
 export class FieldUserRenderer extends BaseFieldRenderer {
+  private pp: IBasePicker<IPersonaProps> = null;
   public constructor(props: IFieldProps) {
     super(props);
     let vals = [];
@@ -20,7 +21,7 @@ export class FieldUserRenderer extends BaseFieldRenderer {
 
     let selectedValues: IPersonaProps[] = [];
     for (let v of vals) {
-      if (v != null) {
+      if (v != null && v.Id !== 0) {
         selectedValues.push({
           primaryText: v.Title,
           id: v.Id.toString()
@@ -37,6 +38,9 @@ export class FieldUserRenderer extends BaseFieldRenderer {
 
   public componentDidMount() {
     this.saveDataInternal();
+    // if (this.props.CurrentMode === FormMode.New || this.props.CurrentMode === FormMode.Edit) {
+    //   this.pp.items = this.state.currentSelectedItems;
+    // }
   }
 
   protected renderNewForm() {
@@ -55,7 +59,7 @@ export class FieldUserRenderer extends BaseFieldRenderer {
     return (
       <div>
         {this.state.currentSelectedItems.map((m, i) => {
-          return <Label key={`${m.id}_${i}`}>{m.primaryText}</Label>
+          return <Label key={`${m.id}_${i}`}>{m.primaryText}</Label>;
         })}
       </div>
     );
@@ -65,10 +69,10 @@ export class FieldUserRenderer extends BaseFieldRenderer {
     return (<div>
       <NormalPeoplePicker
         itemLimit={this.props.IsMulti ? undefined : 1}
-        selectedItems={this.state.currentSelectedItems}
+        defaultSelectedItems={this.state.currentSelectedItems}
         onResolveSuggestions={this.onFilterChanged}
         getTextFromItem={this.getTextFromItem}
-        pickerSuggestionsProps={{searchingText: 'Searching more..'}}
+        pickerSuggestionsProps={{ searchingText: 'Searching more..' }}
         className={'ms-PeoplePicker'}
         key={`${this.props.InternalName}_normalpicker`}
         onRemoveSuggestion={this.onRemoveSuggestion}
@@ -80,6 +84,7 @@ export class FieldUserRenderer extends BaseFieldRenderer {
           placeholder: 'Enter a name or email address'
         }}
         resolveDelay={300}
+        componentRef={(p) => { this.pp = p; }}
       />
     </div>);
   }
@@ -170,17 +175,18 @@ export class FieldUserRenderer extends BaseFieldRenderer {
       return {
         Title: persona.primaryText,
         Id: persona.id
-      }
+      };
     });
 
     if (this.props.IsMulti) {
-      result = {results: result};
+      result = { results: result };
     } else {
       if (this.state.currentSelectedItems.length > 0) {
         result = {
           Title: this.state.currentSelectedItems[0].primaryText,
           Id: this.state.currentSelectedItems[0].id
         };
+        // result = this.state.currentSelectedItems[0].id;
       } else {
         result = null;
       }

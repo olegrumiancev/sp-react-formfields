@@ -14,6 +14,5 @@ export declare class FieldLookupRenderer extends BaseFieldRenderer {
     private getPossibleSuggestionsInternal(filterText, selectedItems);
     private getPnpWeb(webId);
     private selectedItemsContainTag(tag, tagList);
-    private saveFieldDataInternal(newValue);
     private constructNewState(value, toAdd);
 }

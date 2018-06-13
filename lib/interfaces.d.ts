@@ -1,4 +1,4 @@
-import { SPRest } from '@pnp/sp';
+import { SPRest, AttachmentFileInfo } from '@pnp/sp';
 import { BaseFieldRenderer } from './fields';
 export interface IFormMode {
     New: number;
@@ -14,10 +14,31 @@ export interface IFormManagerProps {
     CurrentItemId?: number;
     Fields?: IFieldProps[];
     IsLoading: boolean;
+    NewAttachments?: any[];
+    ExistingAttachmentsToDelete?: any[];
+}
+export interface IFormManagerActions {
+    getState(): IFormManagerProps;
+    initStore(sPWebUrl: string, currentListId: string, currentMode: number, currentItemId?: number): any;
+    setFormMode(mode: number): void;
+    setItemId(itemId: number): void;
+    setFieldData(internalName: string, newValue: any): void;
+    addNewAttachmentInfo(fileInfo: any): void;
+    removeNewAttachmentInfo(fileInfo: any): void;
+    addOrRemoveExistingAttachmentDeletion(attachmentName: string): void;
+    getFieldControlValuesForPost(): Object;
+    getNewAttachmentsToSave(): Promise<AttachmentFileInfo[]>;
+    saveFormData(): Promise<ISaveItemResult>;
 }
 export interface IFormFieldProps {
     InternalName: string;
     FormMode?: number;
+}
+export interface ISaveItemResult {
+    IsSuccessful: boolean;
+    ErrorObject?: object;
+    ItemId: number;
+    RestObject: object;
 }
 export interface IFieldProps {
     Title: string;
@@ -33,6 +54,9 @@ export interface IFieldProps {
     LookupListId?: string;
     LookupWebId?: string;
     LookupField?: string;
+    NumberIsPercent?: boolean;
+    DateTimeIsTimePresent?: boolean;
+    ExistingAttachmentsToDelete?: any[];
     CurrentMode: number;
     pnpSPRest: SPRest;
     saveChangedFieldData?(fieldInternalName: string, newValue: any): void;
