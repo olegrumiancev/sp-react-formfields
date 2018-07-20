@@ -7,7 +7,7 @@ export declare class FieldChoiceRenderer extends BaseFieldRenderer {
     protected renderNewForm(): JSX.Element;
     protected renderEditForm(): JSX.Element;
     protected renderDispForm(): any;
-    private renderNewOrEditForm();
-    private saveFieldDataInternal(newValue);
-    private constructNewState(value, toAdd);
+    private renderNewOrEditForm;
+    private saveFieldDataInternal;
+    private constructNewState;
 }

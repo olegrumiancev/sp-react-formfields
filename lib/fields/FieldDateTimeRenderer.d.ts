@@ -9,7 +9,7 @@ export declare class FieldDateTimeRenderer extends BaseFieldRenderer {
     protected renderNewForm(): JSX.Element;
     protected renderEditForm(): JSX.Element;
     protected renderDispForm(): JSX.Element;
-    private renderNewOrEditForm();
+    private renderNewOrEditForm;
     private getStateObjectFromISO;
     private onDateChange;
     private onTimeChange;

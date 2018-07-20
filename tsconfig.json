@@ -15,6 +15,7 @@
     "removeComments": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
+
     "types": [
       "react",
       "node",
@@ -24,5 +25,8 @@
   },
   "exclude": [
     "lib"
-  ]
+  ],
+  "include": [
+    "src/**/*"
+],
 }

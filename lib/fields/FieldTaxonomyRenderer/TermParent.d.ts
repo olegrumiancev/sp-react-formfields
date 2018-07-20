@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { ITermParentProps, ITermParentState } from './interfaces';
 export default class TermParent extends React.Component<ITermParentProps, ITermParentState> {
@@ -7,5 +6,5 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     constructor(props: ITermParentProps);
     componentWillMount(): void;
     render(): JSX.Element;
-    private _handleClick();
+    private _handleClick;
 }

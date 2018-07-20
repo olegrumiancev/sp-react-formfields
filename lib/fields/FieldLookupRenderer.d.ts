@@ -8,11 +8,11 @@ export declare class FieldLookupRenderer extends BaseFieldRenderer {
     protected renderNewForm(): JSX.Element;
     protected renderEditForm(): JSX.Element;
     protected renderDispForm(): any;
-    private renderNewOrEditForm();
-    private processTagItemsChange(items);
-    private resolveTagSuggestions(filterText, selectedItems);
-    private getPossibleSuggestionsInternal(filterText, selectedItems);
-    private getPnpWeb(webId);
-    private selectedItemsContainTag(tag, tagList);
-    private constructNewState(value, toAdd);
+    private renderNewOrEditForm;
+    private processTagItemsChange;
+    private resolveTagSuggestions;
+    private getPossibleSuggestionsInternal;
+    private getPnpWeb;
+    private selectedItemsContainTag;
+    private constructNewState;
 }

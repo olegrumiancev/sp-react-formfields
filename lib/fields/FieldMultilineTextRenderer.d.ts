@@ -7,7 +7,7 @@ export declare class FieldMultilineTextRenderer extends BaseFieldRenderer {
     protected renderNewForm(): JSX.Element;
     protected renderEditForm(): JSX.Element;
     protected renderDispForm(): JSX.Element;
-    private renderAllForms(editable);
-    private getEditorComponent(isRichTextEnabled, isEditable);
+    private renderAllForms;
+    private getEditorComponent;
     private onChange;
 }

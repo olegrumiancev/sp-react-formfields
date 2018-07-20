@@ -6,8 +6,8 @@ export default class SPTermStorePickerService {
     getAllTerms(termsetId: string): Promise<IPickerTermSet>;
     searchTermsByName(searchText: string): Promise<IPickerTerm[]>;
     cleanGuid(guid: string): string;
-    private searchTermsByTermSet(searchText, termSetId, termLimit?);
-    private isGuid(strGuid);
-    private sortTermsInTermSetByHierarchy(termSet);
-    private getSortedTermsForAParent(allUnsortedTerms, parentPickerTerm);
+    private searchTermsByTermSet;
+    private isGuid;
+    private sortTermsInTermSetByHierarchy;
+    private getSortedTermsForAParent;
 }

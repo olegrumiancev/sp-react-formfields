@@ -19,11 +19,11 @@ export declare class FieldTaxonomyRenderer extends BaseFieldRenderer {
     protected renderEditForm(props: IFieldProps): JSX.Element;
     protected renderDispForm(): JSX.Element;
     protected renderNewOrEditForm(props: IFieldProps): JSX.Element;
-    private trySetProcessedValue();
-    private onOpenPanel();
-    private onClosePanel();
-    private onSave();
-    private termsChanged(term, checked);
-    private termsFromPickerChanged(terms);
-    private trySetValue(terms);
+    private trySetProcessedValue;
+    private onOpenPanel;
+    private onClosePanel;
+    private onSave;
+    private termsChanged;
+    private termsFromPickerChanged;
+    private trySetValue;
 }

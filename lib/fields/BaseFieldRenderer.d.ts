@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { IFieldProps } from '../interfaces';
 export declare class BaseFieldRenderer extends React.Component<IFieldProps, any> {

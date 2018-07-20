@@ -6,9 +6,9 @@ export declare class FieldAttachmentRenderer extends BaseFieldRenderer {
     protected renderNewForm(): JSX.Element;
     protected renderEditForm(): JSX.Element;
     protected renderDispForm(): JSX.Element;
-    private renderAllForms();
-    private getExistingItemsPart();
-    private getUploadPart();
+    private renderAllForms;
+    private getExistingItemsPart;
+    private getUploadPart;
     private onFileAdded;
     private onExistingFileDeleteClick;
     private onDrop;

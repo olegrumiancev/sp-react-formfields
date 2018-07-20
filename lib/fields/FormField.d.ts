@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { IFormFieldProps } from '../interfaces';
 export declare class FormField extends React.Component<IFormFieldProps, any> {
