@@ -5,10 +5,11 @@ export declare class BaseFieldRenderer extends React.Component<IFieldProps, any>
     constructor(props: IFieldProps);
     render(): JSX.Element;
     setFieldMode(mode: number): void;
-    isValid(): boolean;
+    validate(): boolean;
     getValue(): any;
-    protected renderNewForm(): JSX.Element;
-    protected renderEditForm(): JSX.Element;
-    protected renderDispForm(): JSX.Element;
+    protected renderNewForm(props: IFieldProps): JSX.Element;
+    protected renderEditForm(props: IFieldProps): JSX.Element;
+    protected renderDispForm(props: IFieldProps): JSX.Element;
+    protected renderValidationErrors(validationErrors: string[]): JSX.Element;
     protected trySetChangedValue(newValue: any): void;
 }

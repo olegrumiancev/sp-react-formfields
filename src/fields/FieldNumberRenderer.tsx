@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { IFieldProps, FormMode } from '../interfaces';
-import { TextField, ITextFieldProps } from 'office-ui-fabric-react/lib/TextField';
+import { IFieldProps } from '../interfaces';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
+import './FieldNumberRenderer.css';
+import { FormFieldsStore } from '../store';
+import { ValidationManager } from '../managers/ValidationManager';
 
 export class FieldNumberRenderer extends BaseFieldRenderer {
   public constructor(props: IFieldProps) {
@@ -13,8 +16,18 @@ export class FieldNumberRenderer extends BaseFieldRenderer {
     }
     this.state = {
       ...this.state,
-      currentValue: val
+      currentValue: val,
+      decimalEncountered: false
     };
+
+    if (props.Max) {
+      // let val = props.NumberIsPercent ? props.Max * 100 : props.Max;
+      FormFieldsStore.actions.addValidatorToField(ValidationManager.defaultValidators.maxValue, props.InternalName, props.Max);
+    }
+    if (props.Min) {
+      // let val = props.NumberIsPercent ? props.Min * 100 : props.Min;
+      FormFieldsStore.actions.addValidatorToField(ValidationManager.defaultValidators.minValue, props.InternalName, props.Min);
+    }
   }
 
   protected renderNewForm() {
@@ -31,7 +44,6 @@ export class FieldNumberRenderer extends BaseFieldRenderer {
   }
 
   private renderNewOrEditForm() {
-    const percent = this.props.NumberIsPercent ? '%' : null;
     if (this.props.NumberIsPercent) {
       return (
         <React.Fragment>
@@ -39,7 +51,7 @@ export class FieldNumberRenderer extends BaseFieldRenderer {
             onChanged={this.onChanged}
             onKeyPress={this.onKeypress}
             value={this.state.currentValue == null ? '' : this.state.currentValue}
-            addonString='%'
+            prefix='%'
           />
         </React.Fragment>
       );
@@ -57,16 +69,34 @@ export class FieldNumberRenderer extends BaseFieldRenderer {
   }
 
   private onChanged = (newValue) => {
+    let containsDecimal = false;
     let toSave = newValue;
-    if (this.props.NumberIsPercent) {
-      toSave = toSave / 100;
+    if (toSave === '') {
+      toSave = null;
+    } else {
+      if (toSave.indexOf('.') !== -1) {
+        containsDecimal = true;
+      }
+      toSave = parseFloat(toSave);
     }
-    this.setState({ currentValue: newValue });
+    if (toSave) {
+      if (this.props.NumberIsPercent) {
+        toSave = toSave / 100;
+      }
+    }
+    this.setState({
+      currentValue: newValue,
+      decimalEncountered: containsDecimal
+    });
     this.trySetChangedValue(toSave);
   }
 
   private onKeypress = (ev) => {
-    if (ev.key.match(/[0-9]/) === null) {
+    if (ev.key.match(/[0-9]|\./) === null) {
+      ev.preventDefault();
+    }
+
+    if (ev.key.match(/\./) && this.state.decimalEncountered) {
       ev.preventDefault();
     }
   }

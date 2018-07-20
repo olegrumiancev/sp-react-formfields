@@ -3,6 +3,9 @@ import { IFieldProps, FormMode } from '../interfaces';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
+import './FieldTextRenderer.css';
+import { ValidationManager } from '../managers/ValidationManager';
+import { FormFieldsStore } from '../store';
 
 export class FieldTextRenderer extends BaseFieldRenderer {
   public constructor(props: IFieldProps) {
@@ -11,6 +14,9 @@ export class FieldTextRenderer extends BaseFieldRenderer {
       ...this.state,
       currentValue: props.FormFieldValue
     };
+
+    let max = props.Max ? props.Max : 255;
+    FormFieldsStore.actions.addValidatorToField(ValidationManager.defaultValidators.maxLength, props.InternalName, max);
   }
 
   protected renderNewForm() {

@@ -1,3 +1,4 @@
+import { IFieldProps } from './interfaces';
 
 export const getQueryString = (url, field) => {
   let href = url ? url : window.location.href;
@@ -27,4 +28,16 @@ export const unescapeHTML = (str) => {
 
 export const handleError = (msg: string) => {
   console.error(msg);
+};
+
+export const getFieldPropsByInternalName = (allProps: IFieldProps[], internalName: string): IFieldProps => {
+  if (!allProps || allProps.length < 1 || !internalName) {
+    return null;
+  }
+  let filtered = allProps.filter(f => f.InternalName === internalName);
+  if (filtered && filtered.length > 0) {
+    return filtered[0];
+  }
+
+  return null;
 };

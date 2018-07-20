@@ -2,6 +2,7 @@
 import 'rc-time-picker/assets/index.css';
 import { IFieldProps } from '../interfaces';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
+import './FieldDateTimeRenderer.css';
 export declare class FieldDateTimeRenderer extends BaseFieldRenderer {
     private timeFormat;
     constructor(props: IFieldProps);

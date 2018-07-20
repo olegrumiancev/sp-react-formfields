@@ -1,15 +1,13 @@
-require('dropzone/dist/min/dropzone.min.css');
+require('./FieldAttachmentRenderer.min.css');
 require('react-dropzone-component/styles/filepicker.css');
 import * as React from 'react';
 import { IFieldProps, FormMode } from '../interfaces';
-import { Label } from 'office-ui-fabric-react/lib/Label';
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import { AttachmentFiles } from '@pnp/sp/src/attachmentfiles';
-import { DropzoneComponent, DragEventCallback } from 'react-dropzone-component';
+import { DropzoneComponent } from 'react-dropzone-component';
 import { FormFieldsStore } from '../store';
-import { Icon, IIconProps } from 'office-ui-fabric-react/lib/Icon';
-import { ActionButton, IconButton } from 'office-ui-fabric-react/lib/Button';
+import { IconButton } from 'office-ui-fabric-react/lib/Button';
+import { getFieldPropsByInternalName } from '../utils';
 
 export class FieldAttachmentRenderer extends BaseFieldRenderer {
   public constructor(props: IFieldProps) {
@@ -17,7 +15,7 @@ export class FieldAttachmentRenderer extends BaseFieldRenderer {
     this.state = {
       ...this.state,
       currentValue: props.FormFieldValue,
-      existingToDelete: props.ExistingAttachmentsToDelete === undefined ? [] : props.ExistingAttachmentsToDelete
+      existingToDelete: props.AttachmentsExistingToDelete === undefined ? [] : props.AttachmentsExistingToDelete
     };
   }
 
@@ -42,20 +40,6 @@ export class FieldAttachmentRenderer extends BaseFieldRenderer {
     );
   }
 
-  // private getNewItemsPart(): JSX.Element {
-  //   let newAttachmentItems = [];
-  //   if (this.state.fileNames) {
-  //     newAttachmentItems = this.state.fileNames;
-  //   }
-
-  //   return (
-  //     <React.Fragment>
-  //       {newAttachmentItems.map((a, i) => {
-  //         return <Label key={`newAttachment_${i}`}>{a}</Label>;
-  //       })}
-  //     </React.Fragment>);
-  // }
-
   private getExistingItemsPart(): JSX.Element {
     let attachmentItems = [];
     if (this.state.currentValue) {
@@ -66,7 +50,6 @@ export class FieldAttachmentRenderer extends BaseFieldRenderer {
       <React.Fragment>
         {attachmentItems.map((a, i) => {
           let linkStyle = {};
-          // console.log(this.state);
           if (this.state.existingToDelete && this.state.existingToDelete.indexOf(a.FileName) !== -1) {
             linkStyle['textDecoration'] = 'line-through';
           }
@@ -108,7 +91,6 @@ export class FieldAttachmentRenderer extends BaseFieldRenderer {
       let djsConfig = {
         addRemoveLinks: true,
         autoProcessQueue: false
-        // dictDefaultMessage: ''
       };
 
       uploadPart =
@@ -121,45 +103,23 @@ export class FieldAttachmentRenderer extends BaseFieldRenderer {
   }
 
   private onFileAdded = (file) => {
-    console.log(file);
     FormFieldsStore.actions.addNewAttachmentInfo(file);
   }
 
-  private onNewFileRemoved = (file) => {
-    FormFieldsStore.actions.removeNewAttachmentInfo(file);
-  }
-
   private onExistingFileDeleteClick = (ev) => {
-    // ev.persist();
     ev.preventDefault();
-    // console.log(ev);
-    // debugger;
+
     const toDelete = ev.target.closest('button').attributes['data'].value;
     FormFieldsStore.actions.addOrRemoveExistingAttachmentDeletion(toDelete);
-    // let newExistingToDelete = [];
-    // if ((this.state.existingToDelete as any[]) !== undefined) {
-    //   newExistingToDelete = this.state.existingToDelete; // newExistingToDelete;
-    // }
 
-    // console.log(this.props.ExistingAttachmentsToDelete);
     const globalState = FormFieldsStore.actions.getState();
-    this.setState({ existingToDelete: globalState.ExistingAttachmentsToDelete });
-    // if (newExistingToDelete.indexOf(toDelete) !== -1) {
-    //   // newExistingToDelete = newExistingToDelete.filter(el => el !== toDelete);
-    //   FormFieldsStore.actions.removeExistingAttachmentDeletion(toDelete);
-    // } else {
-    //   // newExistingToDelete.push(toDelete);
-    //   FormFieldsStore.actions.addExistingAttachmentDeletion(toDelete);
-    // }
-
-    // this.setState({ existingToDelete: [...newExistingToDelete] });
-    // this.existingToDelete = newExistingToDelete;
-    // this.forceUpdate();
-
+    let attachmentProps = getFieldPropsByInternalName(globalState.Fields, 'Attachments');
+    if (attachmentProps) {
+      this.setState({ existingToDelete: attachmentProps.AttachmentsExistingToDelete });
+    }
   }
 
-  private onDrop = (ev: DragEvent) => {
-    console.log(ev);
-
+  private onDrop = () => {
+    // ...
   }
 }

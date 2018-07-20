@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { IFieldProps, FormMode } from '../interfaces';
-import { TagPicker, ITag, IBasePicker } from 'office-ui-fabric-react/lib/Pickers';
+import { TagPicker, ITag, ITagPickerProps, BasePicker } from 'office-ui-fabric-react/lib/Pickers';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
 import { Web } from '@pnp/sp';
 import { handleError } from '../utils';
+import './FieldLookupRenderer.css';
 
 export class FieldLookupRenderer extends BaseFieldRenderer {
-  private allItemsLoading: boolean;
-  private tagPicker: any;
+  private tagPicker: any; // BasePicker<ITag, ITagPickerProps>;
   public constructor(props: IFieldProps) {
     super(props);
     let vals = [];
@@ -21,11 +21,14 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
     }
     this.state = {
       ...this.state,
-      selectedItems: vals.map(v => ({ key: v.Id, name: v[this.props.LookupField] })),
+      selectedItems: vals.reduce((prevResult, v) => {
+        if (v.Id && v.Id > 0) {
+          prevResult.push({ key: v.Id, name: v[this.props.LookupField] });
+        }
+        return prevResult;
+      }, []),
       allLookupItems: null
     };
-
-    this.allItemsLoading = false;
   }
 
   protected renderNewForm() {
@@ -55,7 +58,12 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
         onChange={(items?: ITag[]) => this.processTagItemsChange(items == null ? [] : items)}
         resolveDelay={750}
         // componentRef={(c) => this.tagPicker = c}
-        ref={c => this.tagPicker = c}
+        ref={c => {
+          if (c != null) {
+            this.tagPicker = c;
+            // this.processTagItemsChange(c.items);
+          }
+        }}
       />
     );
   }
@@ -69,9 +77,9 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
             return { Id: parseInt(si.key), Title: si.name };
           });
         }
-        this.trySetChangedValue({ results: toSave });
+        this.trySetChangedValue(toSave.length > 0 ? { results: toSave } : null);
       } else {
-        let toSave = undefined;
+        let toSave = null;
         if (this.state.selectedItems && this.state.selectedItems.length > 0) {
           let selectedTag = this.state.selectedItems[0] as ITag;
           toSave = { Id: parseInt(selectedTag.key), Title: selectedTag.name };
@@ -86,7 +94,6 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
     console.log(this.tagPicker);
     if (filterText) {
       if (this.state.allLookupItems == null) {
-        this.allItemsLoading = true;
         if (!this.state.allItemsLoading) {
           let toSelect = [this.props.LookupField];
           if (this.props.LookupField !== 'ID') {
@@ -95,7 +102,6 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
 
           this.getPnpWeb(this.props.LookupWebId).then((web: Web) => {
             web.lists.getById(this.props.LookupListId).items.select(...toSelect).getAll().then(items => {
-              this.allItemsLoading = false;
               let transformedItems = items.map(i => ({
                 key: i.ID.toString(),
                 name: i[this.props.LookupField].toString()
@@ -108,7 +114,6 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
               });
             }).catch(e => {
               handleError(e);
-              this.allItemsLoading = false;
             });
           });
         }

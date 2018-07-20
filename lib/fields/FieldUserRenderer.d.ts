@@ -1,9 +1,11 @@
 /// <reference types="react" />
 import { IFieldProps } from '../interfaces';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
+import './FieldUserRenderer.css';
 export declare class FieldUserRenderer extends BaseFieldRenderer {
-    private pp;
+    private isFieldMounted;
     constructor(props: IFieldProps);
+    componentWillUnmount(): void;
     componentDidMount(): void;
     protected renderNewForm(): JSX.Element;
     protected renderEditForm(): JSX.Element;

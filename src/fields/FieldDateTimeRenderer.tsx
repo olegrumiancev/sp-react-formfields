@@ -6,6 +6,7 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
 import * as moment from 'moment';
 import TimePicker from 'rc-time-picker';
+import './FieldDateTimeRenderer.css';
 
 export class FieldDateTimeRenderer extends BaseFieldRenderer {
   private timeFormat = 'HH:mm';
@@ -55,12 +56,12 @@ export class FieldDateTimeRenderer extends BaseFieldRenderer {
           />
         </div>
         {!this.props.DateTimeIsTimePresent ? null :
-          (<TimePicker
+          (<div style={{ width: '100px', display: 'inline-block' }}><TimePicker
             style={{ width: '50px', margin: '10px', display: 'inline-block' }}
             showSecond={false}
             defaultValue={this.state.currentTimeValue ? this.state.currentTimeValue : moment()}
             onChange={this.onTimeChange}
-          />)}
+          /></div>)}
       </React.Fragment>
     );
   }
@@ -89,13 +90,17 @@ export class FieldDateTimeRenderer extends BaseFieldRenderer {
   }
 
   private onTimeChange = (newValue: Date) => {
-    this.setState({ currentTimeValue: moment(newValue.toISOString()) }, () => {
+    let val = newValue ? moment(newValue.toISOString()) : null;
+    this.setState({ currentTimeValue: val }, () => {
       this.trySetChangedValue(this.getCompositeDateForSaving());
     });
   }
 
   private getCompositeDateForSaving = (): string => {
     let baseDate: Date = this.state.currentDateValue;
+    if (!baseDate) {
+      baseDate = new Date(Date.now());
+    }
     if (this.props.DateTimeIsTimePresent && this.state.currentTimeValue) {
       let m: moment.Moment = this.state.currentTimeValue;
       baseDate.setHours(m.hours());

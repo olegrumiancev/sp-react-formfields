@@ -10,7 +10,6 @@ export declare class FieldAttachmentRenderer extends BaseFieldRenderer {
     private getExistingItemsPart();
     private getUploadPart();
     private onFileAdded;
-    private onNewFileRemoved;
     private onExistingFileDeleteClick;
     private onDrop;
 }
