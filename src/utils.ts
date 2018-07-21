@@ -31,6 +31,7 @@ export const handleError = (msg: string) => {
 };
 
 export const getFieldPropsByInternalName = (allProps: IFieldProps[], internalName: string): IFieldProps => {
+  // console.log(allProps);
   if (!allProps || allProps.length < 1 || !internalName) {
     return null;
   }
