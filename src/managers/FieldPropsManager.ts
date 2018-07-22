@@ -32,7 +32,7 @@ export const FieldPropsManager = {
     }
 
     fieldProps = await addFieldTypeSpecificProperties(fieldProps, fieldMetadata);
-    console.log(fieldMetadata);
+    // console.log(fieldMetadata);
     return fieldProps;
   }
 };

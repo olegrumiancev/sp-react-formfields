@@ -11,6 +11,16 @@ export const FormMode: IFormMode = {
   New: 1, Display: 2, Edit: 3
 };
 
+export interface IListFormProps {
+  CurrentListId?: string;
+  CurrentItemId?: number;
+  SpWebUrl?: string;
+  CurrentMode: number;
+  IsLoading?: boolean;
+  IsSaving?: boolean;
+  pnpSPRest?: SPRest;
+}
+
 export interface IFormMessage {
   Text: string;
   DialogCallback?: (globalState: IFormManagerProps) => void;
@@ -129,3 +139,36 @@ export interface IValidationManager {
   };
   validateField(fieldProps: IFieldProps): IValidateFieldResult;
 }
+
+export const getQueryString = (url, field) => {
+  let href = url ? url : window.location.href;
+  let reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
+  let s = reg.exec(href);
+  return s ? s[1] : null;
+};
+
+export const executeSPQuery = async (ctx: SP.ClientRuntimeContext): Promise<any> => {
+  let promise = new Promise<any>((resolve, reject) => {
+    ctx.executeQueryAsync((sender, args) => {
+      resolve();
+    }, (sender, args) => {
+      reject(args.get_message());
+    });
+  });
+  return promise;
+};
+
+// User 'application/json;odata=verbose' for compatibility with SP2013
+export const ODataMode = 'application/json;odata=verbose';
+// export const ODataMode = 'application/json;odata=minimalmetadata';
+
+export const setupPnp = (sp: SPRest, webUrl) => {
+  sp.setup({
+    sp: {
+      headers: {
+        Accept: ODataMode
+      },
+      baseUrl: webUrl
+    }
+  });
+};

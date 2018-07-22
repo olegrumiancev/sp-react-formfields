@@ -61,6 +61,10 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
       this.termsService = new SPTermStorePickerService(this.props);
       this.termsService.getAllTerms(this.props.TaxonomyTermSetId).then((response) => {
         if (response !== null) {
+          // console.log(response);
+          // console.log(this.props.FormFieldValue);
+          // debugger;
+
           if (this.isFieldMounted) {
             this.setState({
               termSetAndTerms: response,
@@ -149,6 +153,7 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
           {
             this.state.openPanel && this.state.loaded && this.state.termSetAndTerms && (
               <div key={this.state.termSetAndTerms.Id} >
+                {/* <h3>{this.state.termSetAndTerms.Name}</h3> */}
                 <TermParent
                   anchorId={props.TaxonomyAnchorId}
                   autoExpand={null}
@@ -172,6 +177,7 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
       return;
     }
 
+    // debugger;
     let currentValue = this.state.currentValue;
     if (this.state.unprocessedInitialValue) {
       currentValue = this.state.unprocessedInitialValue.reduce((prevResults, iv) => {
@@ -182,7 +188,11 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
         return prevResults;
       }, []);
       if (currentValue.length === 0) {
-        currentValue = this.props.FormFieldValue;
+        if (this.props.FormFieldValue.results) {
+          currentValue = this.props.FormFieldValue.results;
+        } else {
+          currentValue = this.props.FormFieldValue;
+        }
       }
     } else {
       currentValue = this.props.FormFieldValue;
@@ -197,7 +207,7 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
 
   private onOpenPanel(): void {
     // Store the current code value
-    this.previousValues = this.state.currentValue ? [...this.state.currentValue] : [];
+    this.previousValues = [...this.state.currentValue];
     this.cancel = true;
     this.setState({ openPanel: true });
   }
@@ -235,10 +245,9 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
       // Check if it is allowed to select multiple terms
       if (this.props.IsMulti) {
         // Add the checked term
-        if (!currentValue) {
-          currentValue = [];
-        }
         currentValue.push(termItem);
+        // Filter out the duplicate terms
+        // activeNodes = uniqBy(activeNodes, 'key');
       } else {
         // Only store the current selected item
         currentValue = [termItem];
@@ -247,6 +256,8 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
       // Remove the term from the list of active nodes
       currentValue = currentValue.filter(item => item.key !== term.key);
     }
+    // Sort all active nodes
+    // activeNodes = sortBy(activeNodes, 'path');
     // Update the current state
     this.setState({
       currentValue: currentValue
@@ -266,6 +277,7 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
         toSet.push(`-1;#${term.name}|${term.key}`);
       }
     }
+    // this.trySetChangedValue(toSet.join(';#'));
     this.trySetChangedValue(terms);
   }
 }

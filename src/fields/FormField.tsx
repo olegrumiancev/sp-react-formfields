@@ -56,7 +56,6 @@ export class FormField extends React.Component<IFormFieldProps, any> {
   }
 
   private registerLoadedField = (field) => {
-    console.log(field);
     this.setState({
       loadedField: field
     });
