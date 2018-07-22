@@ -1,25 +1,14 @@
 require('core-js/shim');
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
-import { IListFormProps, FormMode } from '../scripts/interfaces';
+import { IListFormProps, FormMode } from './interfaces';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import FormHeader from './FormHeader';
 
-// import { IFieldProps, IFormManagerProps } from '@olegrumiancev/sp-react-formfields/lib/interfaces';
-// import { FormField } from '@olegrumiancev/sp-react-formfields/lib/fields/FormField';
-// import { FormFieldsStore } from '@olegrumiancev/sp-react-formfields/lib/store';
-// import { FieldChoiceRenderer } from '@olegrumiancev/sp-react-formfields/lib/fields';
-
 import { FormField } from './fields/FormField';
 import { FormFieldsStore } from './store';
-
-// import { IFieldProps, IFormManagerProps } from '@rumiancev/sp-react-formfields/lib/interfaces';
-// import { FormField } from '@rumiancev/sp-react-formfields/lib/fields/FormField';
-// import { FormFieldsStore } from '@rumiancev/sp-react-formfields/lib/store';
-// import { FieldChoiceRenderer } from '@rumiancev/sp-react-formfields/lib/fields';
 
 export default class ListForm extends React.Component<IListFormProps, IListFormProps> {
   private localContext: SP.ClientContext;

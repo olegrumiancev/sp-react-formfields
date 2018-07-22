@@ -1,3 +1,4 @@
+/// <reference types="sharepoint" />
 import { SPRest, AttachmentFileInfo } from '@pnp/sp';
 import { BaseFieldRenderer } from './fields';
 export interface IFormMode {
@@ -6,6 +7,15 @@ export interface IFormMode {
     Edit: number;
 }
 export declare const FormMode: IFormMode;
+export interface IListFormProps {
+    CurrentListId?: string;
+    CurrentItemId?: number;
+    SpWebUrl?: string;
+    CurrentMode: number;
+    IsLoading?: boolean;
+    IsSaving?: boolean;
+    pnpSPRest?: SPRest;
+}
 export interface IFormMessage {
     Text: string;
     DialogCallback?: (globalState: IFormManagerProps) => void;
@@ -116,3 +126,7 @@ export interface IValidationManager {
     };
     validateField(fieldProps: IFieldProps): IValidateFieldResult;
 }
+export declare const getQueryString: (url: any, field: any) => string;
+export declare const executeSPQuery: (ctx: SP.ClientRuntimeContext) => Promise<any>;
+export declare const ODataMode = "application/json;odata=verbose";
+export declare const setupPnp: (sp: SPRest, webUrl: any) => void;
