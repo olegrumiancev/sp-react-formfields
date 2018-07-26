@@ -3,6 +3,6 @@ let cleanCSS = require('gulp-clean-css');
 
 gulp.task('copyassets', function(){
   return gulp.src(['src/**/*.css', 'src/**/*.json'])
-    .pipe(cleanCSS({compatibility: 'ie8'}))
+    .pipe(cleanCSS())
     .pipe(gulp.dest('lib/') );
 });
