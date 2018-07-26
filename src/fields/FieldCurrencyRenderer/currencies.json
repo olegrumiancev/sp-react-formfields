@@ -134,6 +134,5 @@
   "1090": { "symbol": "m.", "symbolOnLeft": false, "spaceBetweenAmountAndSymbol": false },
   "1058": { "symbol": "₴", "symbolOnLeft": false, "spaceBetweenAmountAndSymbol": false },
   "1091": { "symbol": "so'm", "symbolOnLeft": false, "spaceBetweenAmountAndSymbol": true },
-
   "9217": { "symbol": ".ي.ر", "symbolOnLeft": false, "spaceBetweenAmountAndSymbol": true }
 }
