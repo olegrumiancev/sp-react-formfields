@@ -1,12 +1,12 @@
 import 'rc-time-picker/assets/index.css';
 import * as React from 'react';
-import { IFieldProps, FormMode } from '../interfaces';
+import { IFieldProps } from '../interfaces';
 import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
 import * as moment from 'moment';
 import TimePicker from 'rc-time-picker';
-import './FieldDateTimeRenderer.css';
+// import './FieldDateTimeRenderer.css';
 
 export class FieldDateTimeRenderer extends BaseFieldRenderer {
   private timeFormat = 'HH:mm';

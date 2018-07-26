@@ -1,11 +1,11 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { FormFieldsStore } from './store';
 import { IFormManagerProps } from './interfaces';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { unescapeHTML } from './utils';
 import { ResponsiveMode } from 'office-ui-fabric-react/lib/utilities/decorators/withResponsiveMode';
+require('./fields/styles.css');
 
 export const enhanceProvider = (InitialProviderComponent) => {
   return class extends React.Component {

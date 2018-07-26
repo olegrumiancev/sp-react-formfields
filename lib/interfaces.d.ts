@@ -24,6 +24,7 @@ export interface IFormManagerProps {
     PnPSPRest?: SPRest;
     SPWebUrl: string;
     CurrentListId: string;
+    CurrentListDefaultViewUrl: string;
     CurrentMode: number;
     CurrentItemId?: number;
     Fields?: IFieldProps[];

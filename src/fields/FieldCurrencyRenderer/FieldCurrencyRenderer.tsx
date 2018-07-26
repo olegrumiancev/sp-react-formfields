@@ -3,7 +3,7 @@ import { IFieldProps } from '../../interfaces';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from '../BaseFieldRenderer';
-import './FieldCurrencyRenderer.css';
+// import './FieldCurrencyRenderer.css';
 import { FormFieldsStore } from '../../store';
 import { ValidationManager } from '../../managers/ValidationManager';
 import { getCurrency } from './localeCurrency';

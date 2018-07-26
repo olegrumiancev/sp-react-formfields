@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { IFieldProps, FormMode } from '../interfaces';
+import { IFieldProps } from '../interfaces';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { NormalPeoplePicker, IBasePicker, ValidationState, BasePeoplePicker } from 'office-ui-fabric-react/lib/Pickers';
+import { NormalPeoplePicker, ValidationState } from 'office-ui-fabric-react/lib/Pickers';
 import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
-import { WebEnsureUserResult, PeoplePickerEntity, PrincipalSource, PrincipalType, PrincipalInfo } from '@pnp/sp';
-import './FieldUserRenderer.css';
-import { handleError } from '../utils';
+import { WebEnsureUserResult, PrincipalSource, PrincipalType } from '@pnp/sp';
+// import './FieldUserRenderer.css';
 
 export class FieldUserRenderer extends BaseFieldRenderer {
-  // private pp: IBasePicker<IPersonaProps> = null;
   private isFieldMounted = false;
   public constructor(props: IFieldProps) {
     super(props);
@@ -67,7 +65,7 @@ export class FieldUserRenderer extends BaseFieldRenderer {
         let p = this.props.pnpSPRest.web.siteUsers.getById(sv.id).get();
         promises.push(p);
         p.then(r => {
-          console.log(r);
+          // console.log(r);
           newValues.push({
             id: r.Id,
             key: r.PrincipalType === 4 ? r.Title : r.LoginName,

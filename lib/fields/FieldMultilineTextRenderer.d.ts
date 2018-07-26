@@ -1,7 +1,6 @@
 /// <reference types="react" />
 import { IFieldProps } from '../interfaces';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import './FieldMultilineTextRenderer.css';
 export declare class FieldMultilineTextRenderer extends BaseFieldRenderer {
     constructor(props: IFieldProps);
     protected renderNewForm(): JSX.Element;

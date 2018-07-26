@@ -1,7 +1,6 @@
 /// <reference types="react" />
 import { IFieldProps } from '../../interfaces';
 import { BaseFieldRenderer } from '../BaseFieldRenderer';
-import './FieldCurrencyRenderer.css';
 export declare class FieldCurrencyRenderer extends BaseFieldRenderer {
     constructor(props: IFieldProps);
     protected renderNewForm(): JSX.Element;

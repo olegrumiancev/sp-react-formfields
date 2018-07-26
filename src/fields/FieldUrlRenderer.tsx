@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IFieldProps, FormMode } from '../interfaces';
+import { IFieldProps } from '../interfaces';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import './FieldUrlRenderer.css';
+// import './FieldUrlRenderer.css';
 import { FormFieldsStore } from '../store';
 import { getFieldPropsByInternalName } from '../utils';
 

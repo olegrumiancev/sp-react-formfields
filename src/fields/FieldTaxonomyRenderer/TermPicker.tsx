@@ -14,7 +14,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
     this.onFilterChanged = this.onFilterChanged.bind(this);
     this.onGetTextFromItem = this.onGetTextFromItem.bind(this);
 
-    console.log(this.props.value);
+    // console.log(this.props.value);
     this.state = {
       terms: this.props.value
     };

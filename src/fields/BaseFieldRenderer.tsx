@@ -36,28 +36,6 @@ export class BaseFieldRenderer extends React.Component<IFieldProps, any> {
     );
   }
 
-  // public render() {
-  //   const globalState = FormFieldsStore.actions.getState();
-  //   const fieldProps = getFieldPropsByInternalName(globalState.Fields, this.props.InternalName);
-
-  //   return (
-  //     <React.Fragment>
-  //       <FormFieldsStore.Consumer mapStateToProps={(state: IFormManagerProps) => (state)}>
-  //         {(consumerState: IFormManagerProps) => {
-  //           const fieldProps = consumerState.Fields.filter(f => f.InternalName === this.props.InternalName)[0];
-  //           return (
-  //             <ErrorBoundary>
-  //               {consumerState.CurrentMode === FormMode.New ? this.renderNewForm(fieldProps) : null}
-  //               {consumerState.CurrentMode === FormMode.Edit ? this.renderEditForm(fieldProps) : null}
-  //               {consumerState.CurrentMode === FormMode.Display ? this.renderDispForm(fieldProps) : null}
-  //             </ErrorBoundary>);
-  //         }}
-  //       </FormFieldsStore.Consumer>
-  //       {globalState.ShowValidationErrors && !fieldProps.IsValid ? this.renderValidationErrors(fieldProps.ValidationErrors) : null}
-  //     </React.Fragment>
-  //   );
-  // }
-
   public setFieldMode(mode: number) {
     this.setState({ currentMode: mode }, () => {
       FormFieldsStore.actions.setFormMode(mode);
@@ -66,7 +44,6 @@ export class BaseFieldRenderer extends React.Component<IFieldProps, any> {
 
   public validate(): boolean {
     FormFieldsStore.actions.validateForm();
-    // debugger;
     let validatedProps = ValidationManager.validateField(this.props);
 
     this.setState({
@@ -81,15 +58,15 @@ export class BaseFieldRenderer extends React.Component<IFieldProps, any> {
   }
 
   protected renderNewForm(props: IFieldProps) {
-    return (<div>+ Not implemented, field type: {props.Type}, form mode: new</div>);
+    return (<div>Not implemented, field type: {props.Type}, form mode: new</div>);
   }
 
   protected renderEditForm(props: IFieldProps) {
-    return (<div>+ Not implemented, field type: {props.Type}, form mode: edit</div>);
+    return (<div>Not implemented, field type: {props.Type}, form mode: edit</div>);
   }
 
   protected renderDispForm(props: IFieldProps) {
-    return (<div>++ Not implemented, field type: {props.Type}, form mode: disp</div>);
+    return (<div>Not implemented, field type: {props.Type}, form mode: disp</div>);
   }
 
   protected renderValidationErrors(validationErrors: string[]) {

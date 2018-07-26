@@ -9,7 +9,7 @@ import FieldErrorMessage from './ErrorMessage';
 import SPTermStorePickerService from './SPTermStorePickerService';
 import { IFieldProps } from '../../interfaces';
 import { BaseFieldRenderer } from '../BaseFieldRenderer';
-import './TaxonomyPicker.css';
+// import './TaxonomyPicker.css';
 
 /**
  * Image URLs / Base64
@@ -32,7 +32,7 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
     let unprocessedCurrentValue = [];
     if (props.FormFieldValue) {
       if (props.IsMulti) {
-        unprocessedCurrentValue = props.FormFieldValue.results;
+        unprocessedCurrentValue = props.FormFieldValue ? props.FormFieldValue.results : undefined;
       } else {
         unprocessedCurrentValue = [props.FormFieldValue];
       }
@@ -188,7 +188,7 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
         return prevResults;
       }, []);
       if (currentValue.length === 0) {
-        if (this.props.FormFieldValue.results) {
+        if (this.props.FormFieldValue && this.props.FormFieldValue.results) {
           currentValue = this.props.FormFieldValue.results;
         } else {
           currentValue = this.props.FormFieldValue;
@@ -207,7 +207,7 @@ export class FieldTaxonomyRenderer extends BaseFieldRenderer {
 
   private onOpenPanel(): void {
     // Store the current code value
-    this.previousValues = [...this.state.currentValue];
+    this.previousValues = this.state.currentValue ? [...this.state.currentValue] : [];
     this.cancel = true;
     this.setState({ openPanel: true });
   }

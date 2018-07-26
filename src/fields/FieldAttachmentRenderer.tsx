@@ -1,4 +1,4 @@
-require('./FieldAttachmentRenderer.min.css');
+// require('./FieldAttachmentRenderer.min.css');
 require('react-dropzone-component/styles/filepicker.css');
 import * as React from 'react';
 import { IFieldProps, FormMode } from '../interfaces';

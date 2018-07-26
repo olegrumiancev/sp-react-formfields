@@ -1,6 +1,6 @@
 {
-  "name": "@olegrumiancev/sp-react-formfields",
-  "version": "0.7.3",
+  "name": "sp-react-formfields",
+  "version": "0.8.5",
   "description": "Collection of React controls used for rendering SharePoint fields in custom forms. Support new/edit/display rendering modes.",
   "scripts": {
     "build": "tsc && gulp copyassets"
@@ -39,6 +39,7 @@
     "@types/react": "^16.4.6",
     "@types/sharepoint": "^2016.1.1",
     "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.4",
     "office-ui-fabric-react": "^5.112.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",

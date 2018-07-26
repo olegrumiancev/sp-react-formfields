@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IFieldProps } from './interfaces';
-export default class FormHeader extends React.Component<{
+export declare class FormHeader extends React.Component<{
     Fields: IFieldProps[];
     CurrentMode: number;
 }, {}> {

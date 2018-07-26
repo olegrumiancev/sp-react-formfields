@@ -34,6 +34,7 @@ const storeConfig = {
       configurePnp(sPWebUrl);
 
       let list = sp.web.lists.getById(currentListId);
+      let listData = await list.select('DefaultViewUrl').get();
       let listFields: any[] =
         await list
           .fields
@@ -89,6 +90,7 @@ const storeConfig = {
         PnPSPRest: sp,
         SPWebUrl: sPWebUrl,
         CurrentListId: currentListId,
+        CurrentListDefaultViewUrl: listData.DefaultViewUrl,
         CurrentItemId: currentItemId,
         CurrentMode: currentMode,
         Fields: fieldInfos,

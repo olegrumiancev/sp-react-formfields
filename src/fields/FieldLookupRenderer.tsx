@@ -5,7 +5,7 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
 import { Web } from '@pnp/sp';
 import { handleError } from '../utils';
-import './FieldLookupRenderer.css';
+// import './FieldLookupRenderer.css';
 
 export class FieldLookupRenderer extends BaseFieldRenderer {
   private tagPicker: any; // BasePicker<ITag, ITagPickerProps>;

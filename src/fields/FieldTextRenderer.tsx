@@ -3,7 +3,7 @@ import { IFieldProps, FormMode } from '../interfaces';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import './FieldTextRenderer.css';
+// import './FieldTextRenderer.css';
 import { ValidationManager } from '../managers/ValidationManager';
 import { FormFieldsStore } from '../store';
 

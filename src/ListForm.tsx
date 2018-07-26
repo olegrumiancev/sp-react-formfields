@@ -5,12 +5,12 @@ import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { IListFormProps, FormMode } from './interfaces';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import FormHeader from './FormHeader';
+import { FormHeader } from './FormHeader';
 
 import { FormField } from './fields/FormField';
 import { FormFieldsStore } from './store';
 
-export default class ListForm extends React.Component<IListFormProps, IListFormProps> {
+export class ListForm extends React.Component<IListFormProps, IListFormProps> {
   private localContext: SP.ClientContext;
 
   public constructor(props) {
@@ -27,7 +27,7 @@ export default class ListForm extends React.Component<IListFormProps, IListFormP
     let ListFormStateless = FormFieldsStore.connect(state => {
       let enhancedState = {
         ...state,
-        closeForm: this.closeForm,
+        // closeForm: this.closeForm,
         getButtonsByFormMode: this.getButtonsByFormMode
       };
       return enhancedState;
@@ -47,10 +47,6 @@ export default class ListForm extends React.Component<IListFormProps, IListFormP
       this.state.CurrentMode, this.state.CurrentItemId);
   }
 
-  private closeForm() {
-    //  console.log('Closing the form.');
-  }
-
   private getButtonsByFormMode(mode: number) {
     let commandBarItemSave = {
       className: 'ms-bgColor-neutral',
@@ -59,8 +55,9 @@ export default class ListForm extends React.Component<IListFormProps, IListFormP
       iconProps: {
         iconName: 'Save'
       },
-      onClick: () => {
+      onClick: (ev: Event) => {
         // debugger;
+        ev.preventDefault();
         const isValid = FormFieldsStore.actions.validateForm();
         if (isValid) {
           FormFieldsStore.actions.saveFormData().then(res => {
@@ -87,7 +84,8 @@ export default class ListForm extends React.Component<IListFormProps, IListFormP
       iconProps: {
         iconName: 'Edit'
       },
-      onClick: () => {
+      onClick: (ev: Event) => {
+        ev.preventDefault();
         FormFieldsStore.actions.setFormMode(FormMode.Edit);
       }
     };
@@ -100,23 +98,30 @@ export const ListFormInternal = (props) => {
   // console.log(props);
   return <div>
   <FormHeader CurrentMode={props.CurrentMode as number} Fields={props.Fields} />
-  <CommandBar isSearchBoxVisible={false} key='commandBar'
-    items={props.getButtonsByFormMode(props.CurrentMode)}
-    farItems={[
-      {
-        className: 'ms-bgColor-neutral',
-        key: 'close',
-        name: 'Close',
-        iconProps: {
-          iconName: 'RemoveFilter'
-        },
-        onClick: props.closeForm()
-      }
-    ]}
-  />
   {props.IsLoading ?
     <div className='formContainer' style={{ padding: '5em' }}><Spinner title='Loading...' /></div> :
     <React.Fragment>
+      <CommandBar isSearchBoxVisible={false} key='commandBar'
+        items={props.getButtonsByFormMode(props.CurrentMode)}
+        farItems={[
+          {
+            className: 'ms-bgColor-neutral',
+            key: 'close',
+            name: 'Close',
+            iconProps: {
+              iconName: 'RemoveFilter'
+            },
+            onClick: (ev) => {
+              ev.preventDefault();
+              if (props.closeForm) {
+                props.closeForm();
+              } else {
+                window.location.href = props.CurrentListDefaultViewUrl;
+              }
+            }
+          }
+        ]}
+      />
     {props.Fields.map(f => (
       <div className='formRow' key={`formRow_${f.InternalName}`}>
         <div className='rowLabel' key={`formLabelContainer_${f.InternalName}`}>

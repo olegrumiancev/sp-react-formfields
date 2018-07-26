@@ -1,7 +1,6 @@
 /// <reference types="react" />
 import { IFieldProps } from '../interfaces';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import './FieldUserRenderer.css';
 export declare class FieldUserRenderer extends BaseFieldRenderer {
     private isFieldMounted;
     constructor(props: IFieldProps);

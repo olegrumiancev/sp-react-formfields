@@ -1,7 +1,6 @@
 /// <reference types="react" />
 import { IFieldProps } from '../interfaces';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import './FieldLookupRenderer.css';
 export declare class FieldLookupRenderer extends BaseFieldRenderer {
     private tagPicker;
     constructor(props: IFieldProps);

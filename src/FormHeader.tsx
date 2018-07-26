@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormMode, IFieldProps } from './interfaces';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 
-export default class FormHeader extends React.Component<{Fields: IFieldProps[], CurrentMode: number}, {}> {
+export class FormHeader extends React.Component<{Fields: IFieldProps[], CurrentMode: number}, {}> {
   public constructor(props) {
     super(props);
 

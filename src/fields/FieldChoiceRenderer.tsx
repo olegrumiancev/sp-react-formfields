@@ -3,7 +3,7 @@ import { IFieldProps } from '../interfaces';
 import { Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import './FieldChoiceRenderer.css';
+// import './FieldChoiceRenderer.css';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 export class FieldChoiceRenderer extends BaseFieldRenderer {

@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { IFieldProps, FormMode } from '../interfaces';
+import { IFieldProps } from '../interfaces';
 import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
-import { ValidationManager } from '../managers/ValidationManager';
-import { FormFieldsStore } from '../store';
 
 export class FieldBooleanRenderer extends BaseFieldRenderer {
   public constructor(props: IFieldProps) {

@@ -1,12 +1,5 @@
 import { IFieldProps } from './interfaces';
 
-export const getQueryString = (url, field) => {
-  let href = url ? url : window.location.href;
-  let reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
-  let s = reg.exec(href);
-  return s ? s[1] : null;
-};
-
 const escapeChars = { lt: '<', gt: '>', quot: '"', apos: '\'', amp: '&' };
 export const unescapeHTML = (str) => {
   return str.replace(/\&([^;]+);/g, (entity, entityCode) => {
