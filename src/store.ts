@@ -30,15 +30,38 @@ const storeConfig = {
     IsLoading: true
   } as IFormManagerProps,
   actionsCreators: {
-    initStore: async (state: IFormManagerProps, actions: IFormManagerActions, sPWebUrl: string, currentListId: string, currentMode: number, currentItemId?: number): Promise<IFormManagerProps> => {
+    initStore: async (state: IFormManagerProps, actions: IFormManagerActions, sPWebUrl: string, currentListId: string,
+        currentMode: number, currentItemId?: number, contentTypeId?: string): Promise<IFormManagerProps> => {
       configurePnp(sPWebUrl);
 
       let list = sp.web.lists.getById(currentListId);
-      let listData = await list.select('DefaultViewUrl').get();
-      let listFields: any[] =
-        await list
-          .fields
-          .filter('ReadOnlyField eq false and Hidden eq false and Title ne \'Content Type\'').get();
+      let listData = await list.select('DefaultViewUrl', 'ContentTypesEnabled', 'ContentTypes').expand('ContentTypes').get();
+      let targetContentTypeId = null;
+      if (listData.ContentTypesEnabled) {
+        targetContentTypeId = contentTypeId;
+        if (!targetContentTypeId) {
+          let uniqueContentTypeOrderObj: any = await list.rootFolder.uniqueContentTypeOrder.get();
+          if (uniqueContentTypeOrderObj && uniqueContentTypeOrderObj.UniqueContentTypeOrder &&
+              uniqueContentTypeOrderObj.UniqueContentTypeOrder.results && uniqueContentTypeOrderObj.UniqueContentTypeOrder.results.length > 0) {
+            targetContentTypeId = uniqueContentTypeOrderObj.UniqueContentTypeOrder.results[0].StringValue;
+          }
+        }
+        if (!targetContentTypeId) {
+          let contentTypeOrderObj: any = await list.rootFolder.contentTypeOrder.get();
+          if (contentTypeOrderObj && contentTypeOrderObj.ContentTypeOrder &&
+              contentTypeOrderObj.ContentTypeOrder.results && contentTypeOrderObj.ContentTypeOrder.results.length > 0) {
+            targetContentTypeId = contentTypeOrderObj.ContentTypeOrder.results[0].StringValue;
+          }
+        }
+      }
+
+      let listFields: any[] = null;
+      const fieldsFilter = 'ReadOnlyField eq false and Hidden eq false and Title ne \'Content Type\'';
+      if (targetContentTypeId) {
+        listFields = await list.contentTypes.getById(targetContentTypeId).fields.filter(fieldsFilter).get();
+      } else {
+        listFields = await list.fields.filter(fieldsFilter).get();
+      }
 
       let toSelect = [];
       let toExpand = [];
@@ -66,7 +89,7 @@ const storeConfig = {
         let item = await itemMetadata.select(...toSelect).expand(...toExpand).get();
         eTag = item.__metadata.etag;
         let attachmentMetadata = await itemMetadata.attachmentFiles.get();
-        console.log(item);
+        // console.log(item);
         for (const fm of listFields) {
           fieldInfos.push(await FieldPropsManager.createFieldRendererPropsFromFieldMetadata(fm, currentMode, currentListId, item, sp));
         }
