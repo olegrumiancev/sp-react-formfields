@@ -1,4 +1,4 @@
-# @olegrumiancev/sp-react-formfields [![NPM version](https://badge.fury.io/js/%40olegrumiancev%2Fsp-react-formfields.svg)](https://npmjs.org/package/@olegrumiancev/sp-react-formfields) [![Build Status](https://travis-ci.org/olegrumiancev/sp-react-formfields.svg?branch=master)](https://travis-ci.org/olegrumiancev/sp-react-formfields)
+# sp-react-formfields [![NPM version](https://badge.fury.io/js/sp-react-formfields.svg)](https://npmjs.org/package/sp-react-formfields) [![Build Status](https://travis-ci.org/olegrumiancev/sp-react-formfields.svg?branch=master)](https://travis-ci.org/olegrumiancev/sp-react-formfields)
 
 > Collection of React controls used for rendering SharePoint fields in custom forms. Support new/edit/display rendering modes.
 
