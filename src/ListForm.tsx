@@ -1,4 +1,4 @@
-require('core-js/shim');
+// require('core-js/shim');
 import * as React from 'react';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
@@ -6,7 +6,6 @@ import { IListFormProps, FormMode } from './interfaces';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { FormHeader } from './FormHeader';
-
 import { FormField } from './fields/FormField';
 import { FormFieldsStore } from './store';
 

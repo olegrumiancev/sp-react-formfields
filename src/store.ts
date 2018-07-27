@@ -1,13 +1,10 @@
-import { sp, SPRest, List, AttachmentFileInfo, ItemUpdateResult, ItemAddResult } from '@pnp/sp';
-import createStore from 'react-waterfall';
+import { sp, AttachmentFileInfo, ItemAddResult } from '@pnp/sp';
+import createStore from './react-waterfall';
 import { IFormManagerProps, FormMode, IFieldProps, ISaveItemResult, IFormManagerActions } from './interfaces';
-import { handleError, getFieldPropsByInternalName } from './utils';
+import { getFieldPropsByInternalName } from './utils';
 import { FieldPropsManager } from './managers/FieldPropsManager';
-import * as React from 'react';
 import { ValidationManager } from './managers/ValidationManager';
 import { enhanceProvider } from './EnhancedProvider';
-// const deasync = require('deasync');
-// const deasync = require('synchronize');
 
 let exposedState: IFormManagerProps = null;
 

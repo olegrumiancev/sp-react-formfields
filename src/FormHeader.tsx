@@ -5,7 +5,6 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 export class FormHeader extends React.Component<{Fields: IFieldProps[], CurrentMode: number}, {}> {
   public constructor(props) {
     super(props);
-
   }
 
   public render() {
