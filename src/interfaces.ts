@@ -42,7 +42,7 @@ export interface IFormManagerProps {
 
 export interface IFormManagerActions {
   getState(): IFormManagerProps;
-  initStore(sPWebUrl: string, currentListId: string, currentMode: number, currentItemId?: number): Promise<IFormManagerProps>;
+  initStore(sPWebUrl: string, currentListId: string, currentMode: number, currentItemId?: number, contentTypeId?: string): Promise<IFormManagerProps>;
   setLoading(isLoading: boolean);
   setFormMode(mode: number): void;
   setItemId(itemId: number): void;

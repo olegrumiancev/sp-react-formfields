@@ -32,7 +32,7 @@ const DialogComponent = (state: IFormManagerProps) => {
 
   return (<Dialog
     hidden={false}
-    onDismiss={() => FormFieldsStore.actions.setFormMessage(null)}
+    onDismiss={() => FormFieldsStore.actions.setFormMessage(null, null)}
     dialogContentProps={{
       type: DialogType.normal,
       isMultiline: true,
@@ -50,7 +50,7 @@ const DialogComponent = (state: IFormManagerProps) => {
         if (state.GlobalMessage.DialogCallback) {
           state.GlobalMessage.DialogCallback(state);
         }
-        FormFieldsStore.actions.setFormMessage(null);
+        FormFieldsStore.actions.setFormMessage(null, null);
       }} text='OK' />
       {/* <DefaultButton onClick={this._closeDialog} text='Cancel' /> */}
     </DialogFooter>

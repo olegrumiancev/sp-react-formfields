@@ -28,6 +28,7 @@ export class ListForm extends React.Component<IListFormProps, IListFormProps> {
       let enhancedState = {
         ...state,
         // closeForm: this.closeForm,
+        children: this.props.children,
         getButtonsByFormMode: this.getButtonsByFormMode
       };
       return enhancedState;
@@ -122,7 +123,7 @@ export const ListFormInternal = (props) => {
           }
         ]}
       />
-    {props.Fields.map(f => (
+    {props.children ? props.children : props.Fields.map(f => (
       <div className='formRow' key={`formRow_${f.InternalName}`}>
         <div className='rowLabel' key={`formLabelContainer_${f.InternalName}`}>
           <Label key={`label_${f.InternalName}`}>
