@@ -2,12 +2,13 @@
 import * as React from 'react';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
-import { IListFormProps, FormMode } from './interfaces';
+import { IListFormProps, FormMode, getQueryString } from './interfaces';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { FormHeader } from './FormHeader';
 import { FormField } from './fields/FormField';
 import { FormFieldsStore } from './store';
+import { FormFieldLabel } from './fields/FormFieldLabel';
 
 export class ListForm extends React.Component<IListFormProps, IListFormProps> {
   private localContext: SP.ClientContext;
@@ -116,7 +117,18 @@ export const ListFormInternal = (props) => {
               if (props.closeForm) {
                 props.closeForm();
               } else {
-                window.location.href = props.CurrentListDefaultViewUrl;
+                // check are we in a classic modal dialog?
+                let isdlg = getQueryString(null, 'isdlg');
+                if (isdlg && isdlg === '1') {
+                  try {
+                    SP.UI.ModalDialog.commonModalDialogClose(SP.UI.DialogResult.cancel, null);
+                  } catch {
+                    console.log('Error trying to call SP.UI.ModalDialog.commonModalDialogClose - trying to set parent window url');
+                    window.frames.top.location.href = props.CurrentListDefaultViewUrl;
+                  }
+                } else {
+                  window.location.href = props.CurrentListDefaultViewUrl;
+                }
               }
             }
           }
@@ -125,10 +137,7 @@ export const ListFormInternal = (props) => {
     {props.children ? props.children : props.Fields.map(f => (
       <div className='formRow' key={`formRow_${f.InternalName}`}>
         <div className='rowLabel' key={`formLabelContainer_${f.InternalName}`}>
-          <Label key={`label_${f.InternalName}`}>
-            {f.Title}
-            {f.IsRequired ? <span key={`label_required_${f.InternalName}`} style={{ color: 'red' }}> *</span> : null}
-          </Label>
+          <FormFieldLabel key={`formFieldLabel_${f.InternalName}`} InternalName={f.InternalName} />
         </div>
         <div className='rowField' key={`formFieldContainer_${f.InternalName}`}>
           <FormField key={`formfield_${f.InternalName}`} InternalName={f.InternalName} FormMode={f.CurrentMode} />

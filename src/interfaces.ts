@@ -63,6 +63,10 @@ export interface IFormManagerActions {
   setFormMessage(message: string, callback: () => void): void;
 }
 
+export interface IFormFieldLabelProps {
+  InternalName: string;
+}
+
 export interface IFormFieldProps {
   InternalName: string;
   FormMode?: number;

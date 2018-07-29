@@ -1061,7 +1061,7 @@
   border-bottom: 1px solid #a6a6a6!important;
 }
 
-.ms-TextField-fieldGroup > input {
+.ms-TextField-fieldGroup > input, .ms-BasePicker-text > input {
   border: 0 !important;
 }
 /* FieldUrlRenderer END */

@@ -55,6 +55,9 @@ export interface IFormManagerActions {
     clearValidatorsFromField(internalName: string): void;
     setFormMessage(message: string, callback: () => void): void;
 }
+export interface IFormFieldLabelProps {
+    InternalName: string;
+}
 export interface IFormFieldProps {
     InternalName: string;
     FormMode?: number;

@@ -45,7 +45,7 @@ export class FieldUserRenderer extends BaseFieldRenderer {
   public componentDidMount() {
     this.isFieldMounted = true;
     let spGroupRestriction = this.props.SchemaXml.documentElement.getAttribute('UserSelectionScope');
-    if (spGroupRestriction !== '0') {
+    if (spGroupRestriction && spGroupRestriction !== '0' && Number.isNaN(parseInt(spGroupRestriction))) {
       this.props.pnpSPRest.web.siteGroups.getById(parseInt(spGroupRestriction)).get().then(res => {
         try {
           if (this.isFieldMounted) {
