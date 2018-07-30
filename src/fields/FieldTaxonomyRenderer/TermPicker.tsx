@@ -67,6 +67,9 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
           itemLimit={!this.props.allowMultipleSelections ? 1 : undefined}
           className={`termBasePicker`}
           ref={(r) => this.tagPicker = r}
+          inputProps={{
+            autoComplete: 'off'
+          }}
         />
       </div>
     );

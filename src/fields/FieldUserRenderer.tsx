@@ -125,7 +125,8 @@ export class FieldUserRenderer extends BaseFieldRenderer {
       onChange={this.onItemsChange}
       searchingText={'Searching...'}
       inputProps={{
-        placeholder: 'Enter a name or email address'
+        placeholder: 'Enter a name or email address',
+        autoComplete: 'off'
       }}
       resolveDelay={300}
       // componentRef={(p) => { this.pp = p; }}

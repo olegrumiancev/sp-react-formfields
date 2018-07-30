@@ -57,7 +57,9 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
         defaultSelectedItems={this.state.selectedItems}
         onChange={(items?: ITag[]) => this.processTagItemsChange(items == null ? [] : items)}
         resolveDelay={750}
-        // componentRef={(c) => this.tagPicker = c}
+        inputProps={{
+          autoComplete: 'off'
+        }}
         ref={c => {
           if (c != null) {
             this.tagPicker = c;
