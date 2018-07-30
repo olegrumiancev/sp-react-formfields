@@ -68,7 +68,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
           className={`termBasePicker`}
           ref={(r) => this.tagPicker = r}
           inputProps={{
-            autoComplete: 'off'
+            autoComplete: 'nope'
           }}
         />
       </div>

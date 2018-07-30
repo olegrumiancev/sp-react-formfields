@@ -58,7 +58,7 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
         onChange={(items?: ITag[]) => this.processTagItemsChange(items == null ? [] : items)}
         resolveDelay={750}
         inputProps={{
-          autoComplete: 'off'
+          autoComplete: 'nope'
         }}
         ref={c => {
           if (c != null) {
