@@ -14,13 +14,14 @@ $ npm install --save sp-react-formfields
 ```js
 import { ListForm } from 'sp-react-formfields/lib/ListForm';
 import { FormField } from 'sp-react-formfields/lib/fields/FormField';
+import { FormFieldLabel } from 'sp-react-formfields/lib/fields/FormFieldLabel';
 import { FormMode, getQueryString, IListFormProps } from 'sp-react-formfields/lib/interfaces'
 ```
 
 Main usage is
 1) rendering ListForm component as top level parent
 2) passing ListId, FormMode, ItemId, ContentTypeId properties to ListForm
-3) if ListForm does not have any chldren inside - means all fields for current list or content type will be rendered, or you can specify any number of custom JSX and FormField components inside, passing InternalName string to each.
+3) if ListForm does not have any chldren inside - means all fields for current list or content type will be rendered, or you can specify any number of custom JSX and FormField / FormFieldLabel components inside, passing InternalName string to each.
 
 > Advanced usage with asynchronous component loading that significantly reduces initial load time is provided in the scaffolding project below.
 
