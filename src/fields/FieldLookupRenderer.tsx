@@ -5,13 +5,13 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 import { BaseFieldRenderer } from './BaseFieldRenderer';
 import { Web } from '@pnp/sp';
 import { handleError } from '../utils';
-// import './FieldLookupRenderer.css';
 
 export class FieldLookupRenderer extends BaseFieldRenderer {
-  private tagPicker: any; // BasePicker<ITag, ITagPickerProps>;
+  private tagPicker: any;
   public constructor(props: IFieldProps) {
     super(props);
     let vals = [];
+
     if (this.props.FormFieldValue != null) {
       if (this.props.IsMulti) {
         vals = this.props.FormFieldValue.results;
@@ -23,7 +23,16 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
       ...this.state,
       selectedItems: vals.reduce((prevResult, v) => {
         if (v.Id && v.Id > 0) {
-          prevResult.push({ key: v.Id, name: v[this.props.LookupField] });
+          let displayText = null;
+          if (v[this.props.LookupField]) {
+            displayText = v[this.props.LookupField];
+          } else if (v['Title']) {
+            displayText = v['Title'];
+          }
+          prevResult.push({
+            key: v.Id,
+            name: displayText
+          });
         }
         return prevResult;
       }, []),
@@ -93,7 +102,6 @@ export class FieldLookupRenderer extends BaseFieldRenderer {
 
   private resolveTagSuggestions(filterText: string, selectedItems: ITag[]): ITag[] {
     let results = [];
-    console.log(this.tagPicker);
     if (filterText) {
       if (this.state.allLookupItems == null) {
         if (!this.state.allItemsLoading) {
