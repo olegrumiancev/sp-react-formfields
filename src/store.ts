@@ -364,7 +364,8 @@ const getFieldControlValuesForValidatedUpdate = async (): Promise<any[]> => {
       }
     } else if (fp.Type.match(/datetime/gi)) {
       let d = fp.FormFieldValue === null || fp.FormFieldValue === undefined ? new Date(1900, 0, 1) : new Date(Date.parse(fp.FormFieldValue));
-      fieldValue = d.format('dd/MM/yyyy HH:mm');
+      // fieldValue = d.format('dd/MM/yyyy HH:mm');
+      fieldValue = d.format('MM/dd/yyyy HH:mm');
     } else if (fp.Type.match(/number/gi)) {
       if (fp.FormFieldValue) {
         if (fp.NumberIsPercent) {
